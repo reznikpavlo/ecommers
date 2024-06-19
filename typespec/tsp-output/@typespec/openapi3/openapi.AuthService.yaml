@@ -1,0 +1,81 @@
+openapi: 3.0.0
+info:
+  title: (title)
+  version: 0.0.0
+tags: []
+paths:
+  /api/auth/sign_in:
+    post:
+      operationId: signIn
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                signInReq:
+                  $ref: '#/components/schemas/SignInRequest'
+              required:
+                - signInReq
+  /api/auth/sign_up:
+    post:
+      operationId: signUp
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                signUpReq:
+                  $ref: '#/components/schemas/SignUpRequest'
+              required:
+                - signUpReq
+components:
+  schemas:
+    AuthResponse:
+      type: object
+      required:
+        - token
+      properties:
+        token:
+          type: string
+    SignInRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    SignUpRequest:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
