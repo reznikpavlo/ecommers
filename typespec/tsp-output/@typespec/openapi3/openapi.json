@@ -6,7 +6,127 @@
   },
   "tags": [],
   "paths": {
-    "/api/auth/signUp": {
+    "/api/auth/recover_password": {
+      "post": {
+        "operationId": "recoverPassword",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "There is no content to send for this request, but the headers may be useful. "
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "passRecoverRequest": {
+                    "$ref": "#/components/schemas/PassRecoverRequest"
+                  }
+                },
+                "required": [
+                  "passRecoverRequest"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/sign_in": {
+      "post": {
+        "operationId": "signIn",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/AuthResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "signInReq": {
+                    "$ref": "#/components/schemas/SignInRequest"
+                  }
+                },
+                "required": [
+                  "signInReq"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/sign_out": {
+      "get": {
+        "operationId": "signOut",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "There is no content to send for this request, but the headers may be useful. "
+          }
+        }
+      }
+    },
+    "/api/auth/sign_up": {
       "post": {
         "operationId": "signUp",
         "parameters": [],
@@ -16,7 +136,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthResponse"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/AuthResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    }
+                  ]
                 }
               }
             }
@@ -56,23 +186,175 @@
           }
         }
       },
-      "SignUpRequest": {
+      "ErrorResponse": {
         "type": "object",
         "required": [
-          "name",
-          "email"
+          "code",
+          "message"
         ],
         "properties": {
-          "name": {
-            "type": "string"
+          "code": {
+            "type": "integer",
+            "format": "int32"
           },
-          "email": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "InvalidRequestError": {
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "number",
+            "enum": [
+              400
+            ]
+          },
+          "message": {
+            "type": "string",
+            "enum": [
+              "Invalid Request"
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorResponse"
+          }
+        ]
+      },
+      "NotFoundError": {
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "number",
+            "enum": [
+              404
+            ]
+          },
+          "message": {
+            "type": "string",
+            "enum": [
+              "Not Found"
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorResponse"
+          }
+        ]
+      },
+      "PassRecoverRequest": {
+        "type": "object",
+        "required": [
+          "userNameOrEmail"
+        ],
+        "properties": {
+          "userNameOrEmail": {
+            "type": "string"
+          }
+        }
+      },
+      "SignInRequest": {
+        "type": "object",
+        "required": [
+          "userNameOrEmail",
+          "password"
+        ],
+        "properties": {
+          "userNameOrEmail": {
             "type": "string"
           },
           "password": {
             "type": "string"
           }
         }
+      },
+      "SignUpRequest": {
+        "type": "object",
+        "required": [
+          "userName",
+          "fullName",
+          "email",
+          "phoneNumber",
+          "password",
+          "country",
+          "city",
+          "province",
+          "street",
+          "zipCode"
+        ],
+        "properties": {
+          "userName": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "unitNumber": {
+            "type": "string"
+          },
+          "zipCode": {
+            "type": "string"
+          }
+        }
+      },
+      "UnauthorizedError": {
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "number",
+            "enum": [
+              401
+            ]
+          },
+          "message": {
+            "type": "string",
+            "enum": [
+              "Unauthorized"
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorResponse"
+          }
+        ]
       }
     }
   }
