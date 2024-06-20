@@ -2,6 +2,7 @@ import "@typespec/http";
 import "@typespec/rest";
 import "@typespec/openapi3";
 import "./services/authService.tsp";
+import "./services/usersService.tsp";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;

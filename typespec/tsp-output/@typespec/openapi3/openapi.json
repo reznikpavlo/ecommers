@@ -1,107 +1,181 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Auth service",
+    "title": "Users service",
     "version": "0.0.0"
   },
   "tags": [],
   "paths": {
-    "/api/auth/recover_password": {
-      "post": {
-        "operationId": "recoverPassword",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The request has succeeded.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/components/schemas/InvalidRequestError"
-                    },
-                    {
-                      "$ref": "#/components/schemas/UnauthorizedError"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "204": {
-            "description": "There is no content to send for this request, but the headers may be useful. "
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "passRecoverRequest": {
-                    "$ref": "#/components/schemas/PassRecoverRequest"
-                  }
-                },
-                "required": [
-                  "passRecoverRequest"
-                ]
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/auth/sign_in": {
-      "post": {
-        "operationId": "signIn",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The request has succeeded.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/components/schemas/AuthResponse"
-                    },
-                    {
-                      "$ref": "#/components/schemas/InvalidRequestError"
-                    },
-                    {
-                      "$ref": "#/components/schemas/UnauthorizedError"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "signInReq": {
-                    "$ref": "#/components/schemas/SignInRequest"
-                  }
-                },
-                "required": [
-                  "signInReq"
-                ]
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/auth/sign_out": {
+    "/api/users": {
       "get": {
-        "operationId": "signOut",
+        "operationId": "getUsers",
         "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/UserDetailsResponse"
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/search": {
+      "get": {
+        "operationId": "searchUsers",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/UserDetailsResponse"
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{user_id}": {
+      "get": {
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/UserDetailsResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/NotFoundError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateUserDetails",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/UserDetailsResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/NotFoundError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "The request has succeeded.",
@@ -122,52 +196,6 @@
           },
           "204": {
             "description": "There is no content to send for this request, but the headers may be useful. "
-          }
-        }
-      }
-    },
-    "/api/auth/sign_up": {
-      "post": {
-        "operationId": "signUp",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "The request has succeeded.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/components/schemas/AuthResponse"
-                    },
-                    {
-                      "$ref": "#/components/schemas/InvalidRequestError"
-                    },
-                    {
-                      "$ref": "#/components/schemas/UnauthorizedError"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "signUpReq": {
-                    "$ref": "#/components/schemas/SignUpRequest"
-                  }
-                },
-                "required": [
-                  "signUpReq"
-                ]
-              }
-            }
           }
         }
       }
@@ -175,17 +203,6 @@
   },
   "components": {
     "schemas": {
-      "AuthResponse": {
-        "type": "object",
-        "required": [
-          "token"
-        ],
-        "properties": {
-          "token": {
-            "type": "string"
-          }
-        }
-      },
       "ErrorResponse": {
         "type": "object",
         "required": [
@@ -254,82 +271,6 @@
           }
         ]
       },
-      "PassRecoverRequest": {
-        "type": "object",
-        "required": [
-          "userNameOrEmail"
-        ],
-        "properties": {
-          "userNameOrEmail": {
-            "type": "string"
-          }
-        }
-      },
-      "SignInRequest": {
-        "type": "object",
-        "required": [
-          "userNameOrEmail",
-          "password"
-        ],
-        "properties": {
-          "userNameOrEmail": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        }
-      },
-      "SignUpRequest": {
-        "type": "object",
-        "required": [
-          "userName",
-          "fullName",
-          "email",
-          "phoneNumber",
-          "password",
-          "country",
-          "city",
-          "province",
-          "street",
-          "zipCode"
-        ],
-        "properties": {
-          "userName": {
-            "type": "string"
-          },
-          "fullName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "phoneNumber": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "province": {
-            "type": "string"
-          },
-          "street": {
-            "type": "string"
-          },
-          "unitNumber": {
-            "type": "string"
-          },
-          "zipCode": {
-            "type": "string"
-          }
-        }
-      },
       "UnauthorizedError": {
         "type": "object",
         "required": [
@@ -355,6 +296,87 @@
             "$ref": "#/components/schemas/ErrorResponse"
           }
         ]
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "unitNumber": {
+            "type": "string"
+          },
+          "zipCode": {
+            "type": "string"
+          }
+        }
+      },
+      "UserDetailsResponse": {
+        "type": "object",
+        "required": [
+          "userName",
+          "fullName",
+          "email",
+          "phoneNumber",
+          "country",
+          "city",
+          "province",
+          "street",
+          "zipCode"
+        ],
+        "properties": {
+          "userName": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string"
+          },
+          "street": {
+            "type": "string"
+          },
+          "unitNumber": {
+            "type": "string"
+          },
+          "zipCode": {
+            "type": "string"
+          }
+        }
       }
     }
   }
