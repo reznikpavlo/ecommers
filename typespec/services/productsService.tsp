@@ -52,7 +52,18 @@ namespace ProductsService {
   @route("/{product_id}attachement/{attachement_id}") op deleteProductAttachmentById(@path product_id: string, @path attachement_id: string):  void | InvalidRequestError | UnauthorizedError | NotFoundError;
 
   //handle questions
+  @get
+  @route("/{product_id}/questions") op getProductQuestions(@path product_id: string):  GetQuestionResponse[] | InvalidRequestError | UnauthorizedError | NotFoundError;
+
   @post
-  @route("/{product_id}/questions") op postProductQuestion(@path product_id: string):  void | InvalidRequestError | UnauthorizedError | NotFoundError;
+  @route("/{product_id}/questions") op postProductQuestion(@path product_id: string, postQuestionReq: PostQuestionRequest):  GetQuestionResponse | InvalidRequestError | UnauthorizedError | NotFoundError;
+
+  @post 
+  @route("/{product_id}/questions/{question_id}/respond") op postQuestionAnswer(@path product_id: string, @path question_id: string, postAnswerReq: PostAnswerRequest):  PostAnswerResponse | InvalidRequestError | UnauthorizedError | NotFoundError;
+
+  //handle reviews
+  @get
+  @route("/{product_id}/reviews") op getProductReviews(@path product_id: string):  GetQuestionResponse[] | InvalidRequestError | UnauthorizedError | NotFoundError;
+
 
 } 
