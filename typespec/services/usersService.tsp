@@ -1,8 +1,8 @@
 import "@typespec/http";
 import "@typespec/rest";
 import "@typespec/openapi3";
-import "../models/errorsModel.tsp";
-import "../models/userModel.tsp";
+import "../models/errorModels.tsp";
+import "../models/userModels.tsp";
 
 
 using TypeSpec.Http;

@@ -3,6 +3,7 @@ import "@typespec/rest";
 import "@typespec/openapi3";
 
 model UserDetailsResponse {
+    userId: string;
     userName: string;
     fullName: string;
     email: string;
