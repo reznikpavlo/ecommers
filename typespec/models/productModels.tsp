@@ -13,7 +13,6 @@ model ProductOverviewResponse {
 
 model ProductDetailsResponse extends ProductOverviewResponse {
     stockQuantity: int32;
-    categoryName: string;
 }
 
 model CreateProductRequest {
