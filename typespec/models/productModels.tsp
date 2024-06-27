@@ -52,28 +52,45 @@ model UploadProductImgResponse {
 
 //questions models
 
-model PostQuestionRequest {
+model QuestionRequest {
     question: string;
 }
 
-model GetQuestionResponse {
+model QuestionResponse {
     questionId: int64;
     username: string;
     question: string;
     dateTime: DateTimeKnownEncoding;
 }
 
-model PostAnswerRequest {
-    questionId:  int64;
+model AnswerToQuestionRequest {
     username: string;
     answer: string;
 }
 
-model PostAnswerResponse {
+model AnswerToQuestionResponse extends AnswerToQuestionRequest{
     answerId:  int64;
-    username: string;
-    answer: string;
     dateTime: DateTimeKnownEncoding;
 }
 
 //reviews models
+model ReviewRequest {
+    rate: 1 | 2 | 3 | 4 | 5;
+    comment?: string;
+}
+
+model ReviewResponse extends ReviewRequest {
+    reviewId: int16;
+    username: string;
+    dateTime: DateTimeKnownEncoding;
+}
+
+model AnswerToReviewRequest {
+    username: string;
+    answer: string;
+}
+
+model AnswerToReviewResponse extends AnswerToReviewRequest {
+    answerId:  int64;
+    dateTime: DateTimeKnownEncoding;
+}
