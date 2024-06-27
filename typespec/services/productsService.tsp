@@ -56,7 +56,7 @@ namespace ProductsService {
   @route("/{product_id}/questions") op getProductQuestions(@path product_id: string):  QuestionResponse[] | InvalidRequestError | NotFoundError;
 
   @post
-  @route("/{product_id}/questions") op postProductQuestion(@path product_id: string, postQuestionReq: QuestionRequest):  QuestionResponse | InvalidRequestError | UnauthorizedError | NotFoundError;
+  @route("/{product_id}/questions") op postProductQuestion(@path product_id: string, @body postQuestionReq: QuestionRequest):  QuestionResponse | InvalidRequestError | UnauthorizedError | NotFoundError;
 
   @post 
   @route("/{product_id}/questions/{question_id}/respond") op postQuestionAnswer(@path product_id: string, @path question_id: string, postAnswerReq: AnswerToQuestionRequest):   AnswerToQuestionResponse | InvalidRequestError | UnauthorizedError | NotFoundError;
@@ -66,8 +66,8 @@ namespace ProductsService {
   @route("/{product_id}/reviews") op getProductReviews(@path product_id: string):  ReviewResponse[] | InvalidRequestError  | NotFoundError;
 
   @post
-  @route("/{product_id}/reviews") op postProductReview(@path product_id: string, reviewReq: ReviewRequest):  ReviewResponse | InvalidRequestError  | NotFoundError | UnauthorizedError;
+  @route("/{product_id}/reviews") op postProductReview(@path product_id: string, @body reviewReq: ReviewRequest):  ReviewResponse | InvalidRequestError  | NotFoundError | UnauthorizedError;
 
   @post
-  @route("/{product_id}/reviews/{review_id}/respond") op respondToReview(@path product_id: string, @path review_id: string, answerToReviewReq: AnswerToReviewRequest):  AnswerToReviewResponse | InvalidRequestError  | NotFoundError | UnauthorizedError;
+  @route("/{product_id}/reviews/{review_id}/respond") op respondToReview(@path product_id: string, @path review_id: string, @body answerToReviewReq: AnswerToReviewRequest):  AnswerToReviewResponse | InvalidRequestError  | NotFoundError | UnauthorizedError;
 } 
