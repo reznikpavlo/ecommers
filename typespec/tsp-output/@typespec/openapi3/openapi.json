@@ -1,14 +1,14 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Users service",
+    "title": "Products service",
     "version": "0.0.0"
   },
   "tags": [],
   "paths": {
-    "/api/users": {
+    "/api/products": {
       "get": {
-        "operationId": "getUsers",
+        "operationId": "getProducts",
         "parameters": [],
         "responses": {
           "200": {
@@ -20,94 +20,11 @@
                     {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/UserDetailsResponse"
+                        "$ref": "#/components/schemas/ProductOverviewResponse"
                       }
                     },
                     {
                       "$ref": "#/components/schemas/InvalidRequestError"
-                    },
-                    {
-                      "$ref": "#/components/schemas/UnauthorizedError"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/users/search": {
-      "get": {
-        "operationId": "searchUsers",
-        "parameters": [
-          {
-            "name": "query",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The request has succeeded.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "anyOf": [
-                    {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/UserDetailsResponse"
-                      }
-                    },
-                    {
-                      "$ref": "#/components/schemas/InvalidRequestError"
-                    },
-                    {
-                      "$ref": "#/components/schemas/UnauthorizedError"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/users/{user_id}": {
-      "get": {
-        "operationId": "getUserById",
-        "parameters": [
-          {
-            "name": "user_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The request has succeeded.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/components/schemas/UserDetailsResponse"
-                    },
-                    {
-                      "$ref": "#/components/schemas/InvalidRequestError"
-                    },
-                    {
-                      "$ref": "#/components/schemas/UnauthorizedError"
-                    },
-                    {
-                      "$ref": "#/components/schemas/NotFoundError"
                     }
                   ]
                 }
@@ -116,18 +33,9 @@
           }
         }
       },
-      "patch": {
-        "operationId": "updateUserDetails",
-        "parameters": [
-          {
-            "name": "user_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+      "post": {
+        "operationId": "createProduct",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "The request has succeeded.",
@@ -136,16 +44,13 @@
                 "schema": {
                   "anyOf": [
                     {
-                      "$ref": "#/components/schemas/UserDetailsResponse"
+                      "$ref": "#/components/schemas/ProductDetailsResponse"
                     },
                     {
                       "$ref": "#/components/schemas/InvalidRequestError"
                     },
                     {
                       "$ref": "#/components/schemas/UnauthorizedError"
-                    },
-                    {
-                      "$ref": "#/components/schemas/NotFoundError"
                     }
                   ]
                 }
@@ -158,17 +63,112 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateUserRequest"
+                "type": "object",
+                "properties": {
+                  "createProductReq": {
+                    "$ref": "#/components/schemas/CreateProductRequest"
+                  }
+                },
+                "required": [
+                  "createProductReq"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{product_id}": {
+      "get": {
+        "operationId": "getProductById",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ProductDetailsResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "updateProductById",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ProductDetailsResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "updateProductReq": {
+                    "$ref": "#/components/schemas/UpdateProductRequest"
+                  }
+                },
+                "required": [
+                  "updateProductReq"
+                ]
               }
             }
           }
         }
       },
       "delete": {
-        "operationId": "deleteUser",
+        "operationId": "deleteProductById",
         "parameters": [
           {
-            "name": "user_id",
+            "name": "product_id",
             "in": "path",
             "required": true,
             "schema": {
@@ -199,10 +199,603 @@
           }
         }
       }
+    },
+    "/api/products/{product_id}/attachement": {
+      "post": {
+        "operationId": "uploadProductAttachment",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/UploadProductImgResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "image/jpeg": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uploadProductImgReq": {
+                    "$ref": "#/components/schemas/UploadProductImgRequest"
+                  }
+                },
+                "required": [
+                  "uploadProductImgReq"
+                ]
+              }
+            },
+            "image/jpg": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uploadProductImgReq": {
+                    "$ref": "#/components/schemas/UploadProductImgRequest"
+                  }
+                },
+                "required": [
+                  "uploadProductImgReq"
+                ]
+              }
+            },
+            "image/png": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "uploadProductImgReq": {
+                    "$ref": "#/components/schemas/UploadProductImgRequest"
+                  }
+                },
+                "required": [
+                  "uploadProductImgReq"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{product_id}/attachement/{attachement_id}": {
+      "get": {
+        "operationId": "getProductAttachmentById",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "attachement_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductImgResponse"
+                }
+              },
+              "image/jpg": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductImgResponse"
+                }
+              },
+              "image/png": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductImgResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/NotFoundError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{product_id}/questions": {
+      "get": {
+        "operationId": "getProductQuestions",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/QuestionResponse"
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/NotFoundError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "postProductQuestion",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/QuestionResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/NotFoundError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{product_id}/questions/{question_id}/respond": {
+      "post": {
+        "operationId": "postQuestionAnswer",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "question_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/AnswerToQuestionResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/NotFoundError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "postAnswerReq": {
+                    "$ref": "#/components/schemas/AnswerToQuestionRequest"
+                  }
+                },
+                "required": [
+                  "postAnswerReq"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{product_id}/reviews": {
+      "get": {
+        "operationId": "getProductReviews",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ReviewResponse"
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/NotFoundError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "postProductReview",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ReviewResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/NotFoundError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{product_id}/reviews/{review_id}/respond": {
+      "post": {
+        "operationId": "respondToReview",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "review_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/AnswerToReviewResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/NotFoundError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerToReviewRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/products/{product_id}attachement/{attachement_id}": {
+      "delete": {
+        "operationId": "deleteProductAttachmentById",
+        "parameters": [
+          {
+            "name": "product_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "attachement_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/InvalidRequestError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedError"
+                    },
+                    {
+                      "$ref": "#/components/schemas/NotFoundError"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "There is no content to send for this request, but the headers may be useful. "
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AnswerToQuestionRequest": {
+        "type": "object",
+        "required": [
+          "username",
+          "answer"
+        ],
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          }
+        }
+      },
+      "AnswerToQuestionResponse": {
+        "type": "object",
+        "required": [
+          "answerId",
+          "dateTime"
+        ],
+        "properties": {
+          "answerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dateTime": {
+            "$ref": "#/components/schemas/DateTimeKnownEncoding"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AnswerToQuestionRequest"
+          }
+        ]
+      },
+      "AnswerToReviewRequest": {
+        "type": "object",
+        "required": [
+          "username",
+          "answer"
+        ],
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          }
+        }
+      },
+      "AnswerToReviewResponse": {
+        "type": "object",
+        "required": [
+          "answerId",
+          "dateTime"
+        ],
+        "properties": {
+          "answerId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dateTime": {
+            "$ref": "#/components/schemas/DateTimeKnownEncoding"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AnswerToReviewRequest"
+          }
+        ]
+      },
+      "CreateProductRequest": {
+        "type": "object",
+        "required": [
+          "productName",
+          "productPrice",
+          "productCategory",
+          "productQuantity"
+        ],
+        "properties": {
+          "productName": {
+            "type": "string"
+          },
+          "productDescription": {
+            "type": "string"
+          },
+          "productPrice": {
+            "type": "number"
+          },
+          "productCategory": {
+            "type": "string"
+          },
+          "productQuantity": {
+            "type": "integer"
+          }
+        }
+      },
+      "DateTimeKnownEncoding": {
+        "type": "string",
+        "enum": [
+          "rfc3339",
+          "rfc7231",
+          "unixTimestamp"
+        ],
+        "description": "Known encoding to use on utcDateTime or offsetDateTime"
+      },
       "ErrorResponse": {
         "type": "object",
         "required": [
@@ -216,6 +809,18 @@
           },
           "message": {
             "type": "string"
+          }
+        }
+      },
+      "GetProductImgResponse": {
+        "type": "object",
+        "required": [
+          "image"
+        ],
+        "properties": {
+          "image": {
+            "type": "string",
+            "format": "byte"
           }
         }
       },
@@ -271,6 +876,138 @@
           }
         ]
       },
+      "ProductDetailsResponse": {
+        "type": "object",
+        "required": [
+          "stockQuantity"
+        ],
+        "properties": {
+          "stockQuantity": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ProductOverviewResponse"
+          }
+        ]
+      },
+      "ProductOverviewResponse": {
+        "type": "object",
+        "required": [
+          "productId",
+          "productName",
+          "productPrice",
+          "productCategory",
+          "productAttachements"
+        ],
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "productName": {
+            "type": "string"
+          },
+          "productDescription": {
+            "type": "string"
+          },
+          "productPrice": {
+            "type": "number"
+          },
+          "productCategory": {
+            "type": "string"
+          },
+          "productAttachements": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "QuestionRequest": {
+        "type": "object",
+        "required": [
+          "question"
+        ],
+        "properties": {
+          "question": {
+            "type": "string"
+          }
+        }
+      },
+      "QuestionResponse": {
+        "type": "object",
+        "required": [
+          "questionId",
+          "username",
+          "question",
+          "dateTime"
+        ],
+        "properties": {
+          "questionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "username": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "dateTime": {
+            "$ref": "#/components/schemas/DateTimeKnownEncoding"
+          }
+        }
+      },
+      "ReviewRequest": {
+        "type": "object",
+        "required": [
+          "rate"
+        ],
+        "properties": {
+          "rate": {
+            "type": "number",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
+      "ReviewResponse": {
+        "type": "object",
+        "required": [
+          "reviewId",
+          "username",
+          "dateTime"
+        ],
+        "properties": {
+          "reviewId": {
+            "type": "integer",
+            "format": "int16"
+          },
+          "username": {
+            "type": "string"
+          },
+          "dateTime": {
+            "$ref": "#/components/schemas/DateTimeKnownEncoding"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ReviewRequest"
+          }
+        ]
+      },
       "UnauthorizedError": {
         "type": "object",
         "required": [
@@ -297,83 +1034,53 @@
           }
         ]
       },
-      "UpdateUserRequest": {
+      "UpdateProductRequest": {
         "type": "object",
         "properties": {
-          "userName": {
+          "productName": {
             "type": "string"
           },
-          "fullName": {
+          "productDescription": {
             "type": "string"
           },
-          "email": {
+          "productPrice": {
+            "type": "number"
+          },
+          "productCategory": {
             "type": "string"
           },
-          "phoneNumber": {
-            "type": "string"
+          "productQuantity": {
+            "type": "integer"
           },
-          "country": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "province": {
-            "type": "string"
-          },
-          "street": {
-            "type": "string"
-          },
-          "unitNumber": {
-            "type": "string"
-          },
-          "zipCode": {
-            "type": "string"
+          "stockQuantity": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
-      "UserDetailsResponse": {
+      "UploadProductImgRequest": {
         "type": "object",
         "required": [
-          "userName",
-          "fullName",
-          "email",
-          "phoneNumber",
-          "country",
-          "city",
-          "province",
-          "street",
-          "zipCode"
+          "image"
         ],
         "properties": {
-          "userName": {
-            "type": "string"
+          "image": {
+            "type": "string",
+            "format": "byte"
+          }
+        }
+      },
+      "UploadProductImgResponse": {
+        "type": "object",
+        "required": [
+          "success",
+          "attachementId"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean"
           },
-          "fullName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "phoneNumber": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "province": {
-            "type": "string"
-          },
-          "street": {
-            "type": "string"
-          },
-          "unitNumber": {
-            "type": "string"
-          },
-          "zipCode": {
+          "attachementId": {
             "type": "string"
           }
         }
