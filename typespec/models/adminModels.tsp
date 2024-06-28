@@ -11,3 +11,7 @@ model TransactionResponse {
     transactionStatus: string;
     transactionTime: DateTimeKnownEncoding;
 }
+
+model SalesAnaliticsResponse {
+    
+}
