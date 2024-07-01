@@ -2,7 +2,7 @@ import "@typespec/http";
 import "@typespec/rest";
 import "@typespec/openapi3";
 import "../models/authModels.tsp";
-import "../models/errorsModel.tsp";
+import "../models/errorModels.tsp";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;
