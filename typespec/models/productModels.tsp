@@ -9,18 +9,31 @@ model ProductOverviewResponse {
     productPrice: float;
     productCategory: string;
     productAttachements: string[]; // array of product attachments' names or links
+    sellerUsername: string;
+    stats: [ int32, float32 ];
 }
 
 model ProductDetailsResponse extends ProductOverviewResponse {
     stockQuantity: int32;
+    productDescription?: string; //new
+    productMaterial?: string; //new
+    productWeight?: decimal; //new
+    productWidth?: decimal; //new
+    productLenght?: decimal; //new
+    productHeight?: decimal; //new
 }
 
 model CreateProductRequest {
     productName: string;
-    productDescription?: string;
     productPrice: float;
     productCategory: string;
     productQuantity: integer;
+    productDescription?: string;
+    productMaterial?: string; //new
+    productWeight?: decimal; //new
+    productWidth?: decimal; //new
+    productLenght?: decimal; //new
+    productHeight?: decimal; //new
 }
 
 model UpdateProductRequest {

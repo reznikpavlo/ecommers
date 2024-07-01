@@ -500,10 +500,32 @@ components:
       type: object
       required:
         - stockQuantity
+        - productDescription
+        - productMaterial
+        - productWeight
+        - productWidth
+        - productLenght
+        - productHeight
       properties:
         stockQuantity:
           type: integer
           format: int32
+        productDescription:
+          type: string
+        productMaterial:
+          type: string
+        productWeight:
+          type: number
+          format: decimal
+        productWidth:
+          type: number
+          format: decimal
+        productLenght:
+          type: number
+          format: decimal
+        productHeight:
+          type: number
+          format: decimal
       allOf:
         - $ref: '#/components/schemas/ProductOverviewResponse'
     ProductOverviewResponse:
@@ -514,6 +536,8 @@ components:
         - productPrice
         - productCategory
         - productAttachements
+        - sellerUsername
+        - stats
       properties:
         productId:
           type: integer
@@ -530,6 +554,11 @@ components:
           type: array
           items:
             type: string
+        sellerUsername:
+          type: string
+        stats:
+          type: array
+          items: {}
     QuestionRequest:
       type: object
       required:
