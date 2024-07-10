@@ -3,7 +3,6 @@ import Header from "./Header";
 import TopNavbar from "./TopNavbar";
 import BottomNavbar from "./BottomNavbar";
 import TopFooter from "./TopFooter";
-import SignIn from "./SignIn";
 import LanguageFooter from "./LanguageFooter";
 import BottomFooter from "./BottomFooter";
 
@@ -14,7 +13,6 @@ const Layout: React.FC = () => {
       <TopNavbar />
       <BottomNavbar />
       <Outlet />
-      <SignIn />
       <TopFooter />
       <LanguageFooter />
       <BottomFooter />

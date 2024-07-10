@@ -1,7 +1,7 @@
 import Layout from "../components/layout/Layout";
-import Home from "../components/Home";
-import Register from "../components/Register";
-import Login from "../components/Login";
+import Home from "../components/home/Home";
+import SignIn from "../components/auth/SignIn";
+import Product from "../components/products/Product";
 import { createBrowserRouter } from "react-router-dom";
 import PATH from "./pathConstants";
 
@@ -9,7 +9,7 @@ const router = createBrowserRouter([
   {
     path: PATH.index,
     element: <Layout />,
-    errorElement: <h1>Page Not Found</h1>,
+    errorElement: <h1>Error Occured</h1>,
     children: [
       {
         path: PATH.index,
@@ -17,12 +17,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: PATH.login,
-        element: <Login />,
+        path: PATH.signIn,
+        element: <SignIn/>,
       },
       {
-        path: PATH.register,
-        element: <Register />,
+        path: PATH.product,
+        element: <Product/>,
       },
     ],
   },
