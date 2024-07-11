@@ -25,10 +25,7 @@ func main() {
 	productController := controller.ProductController{}
 	productController.Object = &domain.Object{}
 	productController.Wg.Add(1)
-	go func() {
-		defer productController.Wg.Done()
-		productController.Init(psChan)
-	}()
+	go productController.Init(psChan)
 	psChan <- &productService
 	close(psChan)
 

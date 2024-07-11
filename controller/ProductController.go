@@ -89,7 +89,6 @@ func (pc *ProductController) PutProduct(writer http.ResponseWriter, request *htt
 		defer pc.Wg.Done()
 		pc.productService.SaveProduct(productChannel, newProductChannel)
 	}()
-
 	productChannel <- &newProduct
 	productFromDb := <-newProductChannel
 	productFromDbJson, err := json.Marshal(productFromDb)
@@ -111,6 +110,7 @@ func (pc *ProductController) DeleteProduct(writer http.ResponseWriter, request *
 	pc.Wg.Add(1)
 	// TODO: delete method
 	pc.Wg.Done()
+	close(productIdChannel)
 
 }
 
@@ -123,4 +123,5 @@ func (pc *ProductController) Init(psChan chan *service.ProductService) {
 	pc.HandleFunc("PUT /sale/offers/{productId}", pc.PutProduct)
 	pc.HandleFunc("DELETE /sale/offers/{productId}", pc.DeleteProduct)
 	log.Println("Product controller initialized")
+	pc.Wg.Done()
 }
