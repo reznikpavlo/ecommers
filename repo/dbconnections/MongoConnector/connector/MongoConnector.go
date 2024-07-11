@@ -1,7 +1,6 @@
-package connectors
+package connector
 
 import (
-	"context"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
@@ -35,7 +34,6 @@ func newMongoConnector(source, port, username, password string) *MongoConnector 
 		port:     port,
 		username: username,
 		password: password,
-		Context:  context.TODO(),
 	}
 	return mongoConnector
 }
@@ -47,7 +45,7 @@ func (m *MongoConnector) buildUri() {
 	uriBuilder.WriteString(":")
 	uriBuilder.WriteString(m.port)
 	m.uri = uriBuilder.String()
-	log.Println("Connected to MongoDb at uri=" + m.uri)
+	log.Println("MongoDb uri=" + m.uri)
 }
 
 func (m *MongoConnector) GetUsername() string {

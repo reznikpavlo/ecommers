@@ -1,23 +1,35 @@
-package dbconnections
+package MongoConnector
 
 import (
 	"context"
-	"ecommers/repo/dbconnections/connectors"
+	"ecommers/repo/dbconnections/MongoConnector/connector"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"runtime/debug"
 )
 
+/*
+Database name = ecommers
+Collections:
+
+	Product collection - collection for products
+*/
 type MongoDB struct {
-	mc                *connectors.MongoConnector
+	mc                *connector.MongoConnector
 	ProductCollection *mongo.Collection
-	Client            *mongo.Client
+	client            *mongo.Client
 	Context           context.Context
 }
 
-func (m *MongoDB) MongoInitConnect(connector *connectors.MongoConnector) {
-	m.mc = connector
+// for mongodb expected *connector.MongoConnector
+func (m *MongoDB) InitConnection(conn any) {
+	mongoConnector, ok := conn.(*connector.MongoConnector)
+	if !ok {
+		log.Println("for mongodb expected *connector.MongoConnector")
+		log.Fatal(ok)
+	}
+	m.mc = mongoConnector
 	m.Context = context.TODO()
 	m.init()
 	m.connect()
@@ -54,10 +66,10 @@ func (m *MongoDB) connect() {
 	log.Println("Connected to mongo db at uri = %v, with username = %v \n", m.mc.GetUri(), m.mc.GetUsername())
 
 	m.ProductCollection = clientMongo.Database("ecommers").Collection("products")
-	m.Client = clientMongo
+	m.client = clientMongo
 
 }
 
 func (m *MongoDB) Disconnect() {
-	m.Client.Disconnect(m.Context)
+	m.client.Disconnect(m.Context)
 }
