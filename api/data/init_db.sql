@@ -241,8 +241,6 @@ ALTER TABLE
 ALTER TABLE
     "products_reports" ADD CONSTRAINT "products_reports_reporter_id_foreign" FOREIGN KEY("reporter_id") REFERENCES "users"("id");
 ALTER TABLE
-    "reviews" ADD CONSTRAINT "reviews_product_id_foreign" FOREIGN KEY("product_id") REFERENCES "products"("id");
-ALTER TABLE
     "transactions" ADD CONSTRAINT "transactions_payee_id_foreign" FOREIGN KEY("payee_id") REFERENCES "users"("id");
 ALTER TABLE
     "deliveries" ADD CONSTRAINT "deliveries_shipping_rate_id_foreign" FOREIGN KEY("shipping_rate_id") REFERENCES "shipping_rate"("id");
