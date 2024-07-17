@@ -82,11 +82,11 @@ const BottomFooter = () => {
       </div>
 
       <LegalInfo>
-        <notice>
+        <Notice>
           <a href="/">Conditions of Use</a>
           <a href="/">Privacy Notice</a>
           <a href="/">Interest-Based Ads</a>
-        </notice>
+        </Notice>
         <p>© 1996-2024, Amazon.com, Inc. or its affiliates</p>
         <p>Amazon.com.ca ULC | 40 King Street W 47th Floor, Toronto, Ontario, Canada, M5H 3Y2 | 1-877-586-3230</p>
       </LegalInfo>
@@ -146,4 +146,8 @@ const LegalInfo = styled.div`
   }
     
     
+`;
+
+const Notice = styled.div`
+  /* Add any necessary styles here if needed */
 `;

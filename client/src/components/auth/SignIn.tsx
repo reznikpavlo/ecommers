@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 
+interface HelpContentProps {
+  show: boolean;
+}
+
 const SignIn = () => {
+
   const [showHelp, setShowHelp] = useState(false);
 
   const toggleHelp = () => {
@@ -156,7 +161,7 @@ const HelpPanel = styled.div`
   margin-top: 20px;
 `;
 
-const HelpLink = styled.span`
+const HelpLink = styled.a`
   font-size: 12px;
   cursor: pointer;
   margin-bottom: 10px;
@@ -175,7 +180,7 @@ const HelpDivider = styled.hr`
   border-top: 1px solid #ddd;
 `;
 
-const HelpContent = styled.div`
+const HelpContent = styled.div<HelpContentProps>`
   display: ${props => (props.show ? 'block' : 'none')};
   margin-top: 10px;
 `;
