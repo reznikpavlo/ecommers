@@ -1,5 +1,9 @@
-import React from 'react'
 import styled from 'styled-components'
+
+import type { paths, components } from "../../types/types";
+
+type ProductDetailsType = components["schemas"]["ProductDetailsResponse"];
+type EndpointParams = paths["/api/products/{product_id}"]["parameters"];
 
 function Product() {
   return (
