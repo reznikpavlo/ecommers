@@ -430,14 +430,28 @@ components:
       properties:
         productName:
           type: string
-        productDescription:
-          type: string
         productPrice:
           type: number
         productCategory:
           type: string
         productQuantity:
           type: integer
+        productDescription:
+          type: string
+        productMaterial:
+          type: string
+        productWeight:
+          type: number
+          format: decimal
+        productWidth:
+          type: number
+          format: decimal
+        productLenght:
+          type: number
+          format: decimal
+        productHeight:
+          type: number
+          format: decimal
     DateTimeKnownEncoding:
       type: string
       enum:
@@ -500,12 +514,6 @@ components:
       type: object
       required:
         - stockQuantity
-        - productDescription
-        - productMaterial
-        - productWeight
-        - productWidth
-        - productLenght
-        - productHeight
       properties:
         stockQuantity:
           type: integer
