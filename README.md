@@ -69,4 +69,5 @@ import type { paths, components } from "../../types/types.ts";
 
 type ProductDetailsType = components["schemas"]["ProductDetailsResponse"];
 type EndpointParams = paths["/api/products/{product_id}"]["parameters"];
+
 ````
