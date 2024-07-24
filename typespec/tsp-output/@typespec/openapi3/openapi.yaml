@@ -17,7 +17,7 @@ paths:
                 anyOf:
                   - type: array
                     items:
-                      $ref: '#/components/schemas/ProductOverviewResponse'
+                      $ref: '#/components/schemas/ProductDetailsResponse'
                   - $ref: '#/components/schemas/InvalidRequestError'
     post:
       operationId: createProduct
@@ -187,6 +187,32 @@ paths:
                 anyOf:
                   - $ref: '#/components/schemas/NotFoundError'
                   - $ref: '#/components/schemas/InvalidRequestError'
+  /api/products/{product_id}/attachements/{attachement_id}:
+    delete:
+      operationId: deleteProductAttachmentById
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: attachement_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: '#/components/schemas/InvalidRequestError'
+                  - $ref: '#/components/schemas/UnauthorizedError'
+                  - $ref: '#/components/schemas/NotFoundError'
+        '204':
+          description: 'There is no content to send for this request, but the headers may be useful. '
   /api/products/{product_id}/questions:
     get:
       operationId: getProductQuestions
@@ -346,32 +372,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AnswerToReviewRequest'
-  /api/products/{product_id}attachement/{attachement_id}:
-    delete:
-      operationId: deleteProductAttachmentById
-      parameters:
-        - name: product_id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: attachement_id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: The request has succeeded.
-          content:
-            application/json:
-              schema:
-                anyOf:
-                  - $ref: '#/components/schemas/InvalidRequestError'
-                  - $ref: '#/components/schemas/UnauthorizedError'
-                  - $ref: '#/components/schemas/NotFoundError'
-        '204':
-          description: 'There is no content to send for this request, but the headers may be useful. '
 components:
   schemas:
     AnswerToQuestionRequest:
@@ -470,6 +470,49 @@ components:
           format: int32
         message:
           type: string
+    GetContactResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+    GetDeliveryResponse:
+      type: object
+      required:
+        - handlingTime
+        - shippingRates
+        - additionalInfo
+        - shipmentDate
+      properties:
+        handlingTime:
+          type: string
+        shippingRates:
+          $ref: '#/components/schemas/ShippingRates'
+        additionalInfo:
+          type: string
+        shipmentDate:
+          type: string
+          format: date-time
+    GetLocationResponse:
+      type: object
+      required:
+        - id
+        - city
+        - country
+        - postCode
+        - province
+      properties:
+        id:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+        postCode:
+          type: string
+        province:
+          type: string
     GetProductImgResponse:
       type: object
       required:
@@ -478,6 +521,79 @@ components:
         image:
           type: string
           format: byte
+    GetPublicationResponse:
+      type: object
+      required:
+        - duration
+        - endAt
+        - startAt
+        - status
+        - republish
+        - endedBy
+      properties:
+        duration:
+          type: string
+        endAt:
+          type: string
+          format: date-time
+        startAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+        republish:
+          type: boolean
+        endedBy:
+          type: string
+    GetSaleAfterServiceResponse:
+      type: object
+      required:
+        - warranty
+        - returnPolicy
+        - userWarranty
+      properties:
+        warranty:
+          $ref: '#/components/schemas/WarrantyResponse'
+        returnPolicy:
+          $ref: '#/components/schemas/ReturnPolicyResponse'
+        userWarranty:
+          $ref: '#/components/schemas/UserWarrantyResponse'
+    GetStockResponse:
+      type: object
+      required:
+        - avaiable
+        - unit
+      properties:
+        avaiable:
+          type: integer
+          format: int32
+        unit:
+          type: string
+    GetTaxResponse:
+      type: object
+      required:
+        - rates
+      properties:
+        rates:
+          $ref: '#/components/schemas/RatesResponse'
+    GetValidationResponse:
+      type: object
+      required:
+        - error
+        - warnings
+        - validationDate
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+        warnings:
+          type: array
+          items:
+            type: string
+        validationDate:
+          type: string
+          format: date-time
     InvalidRequestError:
       type: object
       required:
@@ -513,60 +629,45 @@ components:
     ProductDetailsResponse:
       type: object
       required:
-        - stockQuantity
+        - id
+        - category
+        - attachments
+        - delivery
+        - publication
+        - language
+        - validation
+        - saleAfterService
+        - stock
+        - contact
+        - locations
+        - tax
       properties:
-        stockQuantity:
-          type: integer
-          format: int32
-        productDescription:
+        id:
           type: string
-        productMaterial:
+        category:
           type: string
-        productWeight:
-          type: number
-          format: decimal
-        productWidth:
-          type: number
-          format: decimal
-        productLenght:
-          type: number
-          format: decimal
-        productHeight:
-          type: number
-          format: decimal
-      allOf:
-        - $ref: '#/components/schemas/ProductOverviewResponse'
-    ProductOverviewResponse:
-      type: object
-      required:
-        - productId
-        - productName
-        - productPrice
-        - productCategory
-        - productAttachements
-        - sellerUsername
-        - stats
-      properties:
-        productId:
-          type: integer
-          format: int64
-        productName:
-          type: string
-        productDescription:
-          type: string
-        productPrice:
-          type: number
-        productCategory:
-          type: string
-        productAttachements:
+        attachments:
           type: array
           items:
-            type: string
-        sellerUsername:
+            $ref: '#/components/schemas/GetProductImgResponse'
+        delivery:
+          $ref: '#/components/schemas/GetDeliveryResponse'
+        publication:
+          $ref: '#/components/schemas/GetPublicationResponse'
+        language:
           type: string
-        stats:
-          type: array
-          items: {}
+        validation:
+          $ref: '#/components/schemas/GetValidationResponse'
+        saleAfterService:
+          $ref: '#/components/schemas/GetSaleAfterServiceResponse'
+        stock:
+          $ref: '#/components/schemas/GetStockResponse'
+        contact:
+          $ref: '#/components/schemas/GetContactResponse'
+        locations:
+          $ref: '#/components/schemas/GetLocationResponse'
+        tax:
+          $ref: '#/components/schemas/GetTaxResponse'
     QuestionRequest:
       type: object
       required:
@@ -591,6 +692,27 @@ components:
           type: string
         dateTime:
           $ref: '#/components/schemas/DateTimeKnownEncoding'
+    RatesResponse:
+      type: object
+      required:
+        - rate
+        - country
+        - province
+      properties:
+        rate:
+          type: number
+          format: float
+        country:
+          type: string
+        province:
+          type: string
+    ReturnPolicyResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
     ReviewRequest:
       type: object
       required:
@@ -622,6 +744,13 @@ components:
           $ref: '#/components/schemas/DateTimeKnownEncoding'
       allOf:
         - $ref: '#/components/schemas/ReviewRequest'
+    ShippingRates:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
     UnauthorizedError:
       type: object
       required:
@@ -671,4 +800,18 @@ components:
         success:
           type: boolean
         attachementId:
+          type: string
+    UserWarrantyResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+    WarrantyResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
           type: string
