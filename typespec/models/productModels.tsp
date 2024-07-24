@@ -2,27 +2,6 @@ import "@typespec/http";
 import "@typespec/rest";
 import "@typespec/openapi3";
 
-model ProductOverviewResponse {
-    productId: int64;
-    productName: string;
-    productDescription?: string;
-    productPrice: float;
-    productCategory: string;
-    productAttachements: string[]; // array of product attachments' names or links
-    sellerUsername: string;
-    stats: [ int32, float32 ];
-}
-
-model ProductDetailsResponse extends ProductOverviewResponse {
-    stockQuantity: int32;
-    productDescription?: string; //new
-    productMaterial?: string; //new
-    productWeight?: decimal; //new
-    productWidth?: decimal; //new
-    productLenght?: decimal; //new
-    productHeight?: decimal; //new
-}
-
 model CreateProductRequest {
     productName: string;
     productPrice: float;
@@ -112,14 +91,14 @@ model ShippingRates {
 }
 
 
-model DeliveryResponse {
+model GetDeliveryResponse {
     handlingTime: string;
     shippingRates: ShippingRates;
     additionalInfo: string;
     shipmentDate: utcDateTime;
 }
 
-model PublicationResponse {
+model GetPublicationResponse {
     duration : string; //const 24h, 5 days, 7 days, 30 days
     endAt: utcDateTime;
     startAt: utcDateTime;
@@ -128,7 +107,7 @@ model PublicationResponse {
     endedBy: string // Usre or admin if it brakes policies
 }
 
-model  ValidationResponse {
+model  GetValidationResponse {
     error: string[];
     warnings : string[];
     validationDate : utcDateTime;
@@ -146,22 +125,22 @@ model UserWarrantyResponse {
     id: string;
 }
 
-model SaleAfterServiceResponse {
+model GetSaleAfterServiceResponse {
     warranty : WarrantyResponse;
     returnPolicy: ReturnPolicyResponse;
     userWarranty: UserWarrantyResponse;
 }
 
-model StockResponse {
+model GetStockResponse {
     avaiable : int32;
     unit : string; // pcs, or bulk, or parcel I don't know yet
   }
 
-model ContactResponse {
+model GetContactResponse {
     id : string; //predefined by user in settings, could be a lot of contacts 
 }
 
-model LocationResponse {
+model  GetLocationResponse {
       id: string; // mainly it's enough, becouse user can have a couple warehouses
       city: string; 
       country: string;
@@ -175,21 +154,21 @@ model RatesResponse {
         province: string;
 }
 
-model TaxResponse{
+model GetTaxResponse{
     rates: RatesResponse;
 }
 
-model ProductDetails {
+model ProductDetailsResponse {
     id : string;
     category : string;
     attachments : GetProductImgResponse[];
-    delivery: DeliveryResponse;
-    publicatuin: PublicationResponse;
+    delivery: GetDeliveryResponse;
+    publication: GetPublicationResponse;
     language: string; 
-    validation: ValidationResponse;
-    saleAfterService : SaleAfterServiceResponse;
-    stock : StockResponse;
-    contact: ContactResponse;
-    locations :LocationResponse;
-    tax: TaxResponse;
+    validation: GetValidationResponse;
+    saleAfterService : GetSaleAfterServiceResponse;
+    stock : GetStockResponse;
+    contact: GetContactResponse;
+    locations: GetLocationResponse;
+    tax: GetTaxResponse;
   }
