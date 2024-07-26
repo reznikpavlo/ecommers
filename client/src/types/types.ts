@@ -260,8 +260,10 @@ export interface components {
         } & WithRequired<components["schemas"]["ErrorResponse"], "code" | "message">;
         ProductDetailsResponse: {
             id: string;
+            name: string;
+            description: string;
             category: string;
-            attachments: components["schemas"]["GetProductImgResponse"][];
+            attachments: string[];
             delivery: components["schemas"]["GetDeliveryResponse"];
             publication: components["schemas"]["GetPublicationResponse"];
             language: string;

@@ -160,8 +160,10 @@ model GetTaxResponse{
 
 model ProductDetailsResponse {
     id : string;
-    category : string;
-    attachments : GetProductImgResponse[];
+    name: string;
+    description: string;
+    category: string;
+    attachments: string[];
     delivery: GetDeliveryResponse;
     publication: GetPublicationResponse;
     language: string; 

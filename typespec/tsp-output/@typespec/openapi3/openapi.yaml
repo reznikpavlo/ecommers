@@ -630,6 +630,8 @@ components:
       type: object
       required:
         - id
+        - name
+        - description
         - category
         - attachments
         - delivery
@@ -644,12 +646,16 @@ components:
       properties:
         id:
           type: string
+        name:
+          type: string
+        description:
+          type: string
         category:
           type: string
         attachments:
           type: array
           items:
-            $ref: '#/components/schemas/GetProductImgResponse'
+            type: string
         delivery:
           $ref: '#/components/schemas/GetDeliveryResponse'
         publication:

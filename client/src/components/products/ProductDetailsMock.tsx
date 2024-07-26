@@ -1,7 +1,16 @@
+/*
+Changes to data: 
+1) Added name field;
+2) Added description Field;
+3) Changed attachments field from [{ image: "link" }] to ["link"]
+*/
+
 export const productDetailsMock = {
     id: "prod_id",
+    name: "Asus",
+    description: "Asus X55A Laptop 2 GB RAM, 4 Intel Cores", 
     category: "Electronics",
-    attachments: [{ image: "link" }],
+    attachments: ["link"],
     delivery: {
         handlingTime: "2 days",
         shippingRates: {
