@@ -37,7 +37,18 @@ function Product() {
 
   return (
     <Container>
-      <AttachmentsContainer>Attachments</AttachmentsContainer>
+      <AttachmentsContainer>
+        <IconsContainer>
+          {
+            productDetails?.attachments.map(img => {
+              return <Icon src={img} />
+            })
+          }
+        </IconsContainer>
+        <MainImgContainer>
+          <MainImg src={productDetails?.attachments[0]}/>
+        </MainImgContainer>
+      </AttachmentsContainer>
       <InfoContainer>Info</InfoContainer>
     </Container>
   )
@@ -54,6 +65,23 @@ const Container = styled.div`
 `
 
 const AttachmentsContainer = styled.div`
+display: flex;
+width: 50%;`
+
+const IconsContainer = styled.div`
+display: flex;
+flex-direction: column;
+width: 30%;`
+
+const Icon = styled.img`
+display: flex;
+width: 100%;`
+
+const MainImgContainer = styled.div`
+display: flex;
+width: 60%;`
+
+const MainImg = styled.img`
 display: flex;`
 
 const InfoContainer = styled.div`
