@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {Link }from "react-router-dom";
-const Signinbutton = () => {
+const SignInButton = () => {
   return (
     <SignInContainer>
       <SignInMessage>
@@ -8,11 +8,11 @@ const Signinbutton = () => {
       </SignInMessage>
 
 
-      <SignInButton>
+      <SignInBox>
       <Link to="/signin" style={{ color: 'inherit', textDecoration: 'none' }}>
       Sign in
     </Link>
-      </SignInButton>
+      </SignInBox>
 
       <NewCustomerLink>
         New customer? <StartHereLink href="#">Start here.</StartHereLink>
@@ -21,7 +21,7 @@ const Signinbutton = () => {
   );
 };
 
-export default Signinbutton;
+export default SignInButton;
 
 const SignInContainer = styled.div`
   display: flex;
@@ -38,7 +38,7 @@ const SignInMessage = styled.h2`
   margin-bottom: 10px;
 `;
 
-const SignInButton = styled.button`
+const SignInBox = styled.button`
   padding: 10px 120px;
   background-color: #f90;
   color: #fff;
