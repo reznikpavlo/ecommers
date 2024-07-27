@@ -16,7 +16,7 @@ using TypeSpec.Rest;
 namespace ProductsService {
   //handle product
     @get
-    @route("/") op getProducts():  ProductOverviewResponse[] | InvalidRequestError;
+    @route("/") op getProducts():  ProductDetailsResponse[] | InvalidRequestError;
 
     @post
     @route("/") op createProduct(createProductReq :CreateProductRequest):  ProductDetailsResponse | InvalidRequestError | UnauthorizedError;
@@ -49,7 +49,7 @@ namespace ProductsService {
   } | NotFoundError | InvalidRequestError;
 
   @delete
-  @route("/{product_id}attachement/{attachement_id}") op deleteProductAttachmentById(@path product_id: string, @path attachement_id: string):  void | InvalidRequestError | UnauthorizedError | NotFoundError;
+  @route("/{product_id}/attachements/{attachement_id}") op deleteProductAttachmentById(@path product_id: string, @path attachement_id: string):  void | InvalidRequestError | UnauthorizedError | NotFoundError;
 
   //handle questions
   @get

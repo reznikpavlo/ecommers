@@ -60,15 +60,14 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO amazon_user;
 
 1. Provide yaml schema and output file and generate the file with TS types(run the following command from the project root directory or adjust path accordingly):
 
-``npx openapi-typescript ./typespec/tsp-output/@typespec/openapi3/openapi.yaml -o ./types.ts``
+``npx openapi-typescript typespec/tsp-output/@typespec/openapi3/openapi.yaml -o ./client/src/types/types.ts``
 
-2. Move the generated types.ts file to ecommers/client/src/types
-
-3. Import types where needed in React project:
+2. Import types where needed in React project:
 
 ````
 import type { paths, components } from "../../types/types.ts";
 
 type ProductDetailsType = components["schemas"]["ProductDetailsResponse"];
 type EndpointParams = paths["/api/products/{product_id}"]["parameters"];
+
 ````

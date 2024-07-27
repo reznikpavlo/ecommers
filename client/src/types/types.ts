@@ -68,6 +68,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/products/{product_id}/attachements/{attachement_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["deleteProductAttachmentById"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/products/{product_id}/questions": {
         parameters: {
             query?: never;
@@ -132,22 +148,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/products/{product_id}attachement/{attachement_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete: operations["deleteProductAttachmentById"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -196,9 +196,55 @@ export interface components {
             code: number;
             message: string;
         };
+        GetContactResponse: {
+            id: string;
+        };
+        GetDeliveryResponse: {
+            handlingTime: string;
+            shippingRates: components["schemas"]["ShippingRates"];
+            additionalInfo: string;
+            /** Format: date-time */
+            shipmentDate: string;
+        };
+        GetLocationResponse: {
+            id: string;
+            city: string;
+            country: string;
+            postCode: string;
+            province: string;
+        };
         GetProductImgResponse: {
             /** Format: byte */
             image: string;
+        };
+        GetPublicationResponse: {
+            duration: string;
+            /** Format: date-time */
+            endAt: string;
+            /** Format: date-time */
+            startAt: string;
+            status: string;
+            republish: boolean;
+            endedBy: string;
+        };
+        GetSaleAfterServiceResponse: {
+            warranty: components["schemas"]["WarrantyResponse"];
+            returnPolicy: components["schemas"]["ReturnPolicyResponse"];
+            userWarranty: components["schemas"]["UserWarrantyResponse"];
+        };
+        GetStockResponse: {
+            /** Format: int32 */
+            avaiable: number;
+            unit: string;
+        };
+        GetTaxResponse: {
+            rates: components["schemas"]["RatesResponse"];
+        };
+        GetValidationResponse: {
+            error: string[];
+            warnings: string[];
+            /** Format: date-time */
+            validationDate: string;
         };
         InvalidRequestError: {
             /** @enum {number} */
@@ -213,29 +259,18 @@ export interface components {
             message: "Not Found";
         } & WithRequired<components["schemas"]["ErrorResponse"], "code" | "message">;
         ProductDetailsResponse: {
-            /** Format: int32 */
-            stockQuantity: number;
-            productDescription?: string;
-            productMaterial?: string;
-            /** Format: decimal */
-            productWeight?: number;
-            /** Format: decimal */
-            productWidth?: number;
-            /** Format: decimal */
-            productLenght?: number;
-            /** Format: decimal */
-            productHeight?: number;
-        } & components["schemas"]["ProductOverviewResponse"];
-        ProductOverviewResponse: {
-            /** Format: int64 */
-            productId: number;
-            productName: string;
-            productDescription?: string;
-            productPrice: number;
-            productCategory: string;
-            productAttachements: string[];
-            sellerUsername: string;
-            stats: unknown[];
+            id: string;
+            category: string;
+            attachments: components["schemas"]["GetProductImgResponse"][];
+            delivery: components["schemas"]["GetDeliveryResponse"];
+            publication: components["schemas"]["GetPublicationResponse"];
+            language: string;
+            validation: components["schemas"]["GetValidationResponse"];
+            saleAfterService: components["schemas"]["GetSaleAfterServiceResponse"];
+            stock: components["schemas"]["GetStockResponse"];
+            contact: components["schemas"]["GetContactResponse"];
+            locations: components["schemas"]["GetLocationResponse"];
+            tax: components["schemas"]["GetTaxResponse"];
         };
         QuestionRequest: {
             question: string;
@@ -246,6 +281,15 @@ export interface components {
             username: string;
             question: string;
             dateTime: components["schemas"]["DateTimeKnownEncoding"];
+        };
+        RatesResponse: {
+            /** Format: float */
+            rate: number;
+            country: string;
+            province: string;
+        };
+        ReturnPolicyResponse: {
+            id: string;
         };
         ReviewRequest: {
             /** @enum {number} */
@@ -258,6 +302,9 @@ export interface components {
             username: string;
             dateTime: components["schemas"]["DateTimeKnownEncoding"];
         } & components["schemas"]["ReviewRequest"];
+        ShippingRates: {
+            id: string;
+        };
         UnauthorizedError: {
             /** @enum {number} */
             code: 401;
@@ -280,6 +327,12 @@ export interface components {
         UploadProductImgResponse: {
             success: boolean;
             attachementId: string;
+        };
+        UserWarrantyResponse: {
+            id: string;
+        };
+        WarrantyResponse: {
+            id: string;
         };
     };
     responses: never;
@@ -305,7 +358,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProductOverviewResponse"][] | components["schemas"]["InvalidRequestError"];
+                    "application/json": components["schemas"]["ProductDetailsResponse"][] | components["schemas"]["InvalidRequestError"];
                 };
             };
         };
@@ -475,6 +528,36 @@ export interface operations {
             };
         };
     };
+    deleteProductAttachmentById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                product_id: string;
+                attachement_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The request has succeeded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvalidRequestError"] | components["schemas"]["UnauthorizedError"] | components["schemas"]["NotFoundError"];
+                };
+            };
+            /** @description There is no content to send for this request, but the headers may be useful.  */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     getProductQuestions: {
         parameters: {
             query?: never;
@@ -624,36 +707,6 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["AnswerToReviewResponse"] | components["schemas"]["InvalidRequestError"] | components["schemas"]["NotFoundError"] | components["schemas"]["UnauthorizedError"];
                 };
-            };
-        };
-    };
-    deleteProductAttachmentById: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                product_id: string;
-                attachement_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description The request has succeeded. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["InvalidRequestError"] | components["schemas"]["UnauthorizedError"] | components["schemas"]["NotFoundError"];
-                };
-            };
-            /** @description There is no content to send for this request, but the headers may be useful.  */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
         };
     };
