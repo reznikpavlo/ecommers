@@ -1,13 +1,13 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
+import { useState } from 'react';
+
 
 interface HelpContentProps {
   show: boolean;
 }
 
 const SignIn = () => {
-
   const [showHelp, setShowHelp] = useState(false);
 
   const toggleHelp = () => {
@@ -49,7 +49,9 @@ const SignIn = () => {
       </SignInBox>
 
       <NewToAmazon>
-        New to Amazon? <StyledLink href="#">Create your Amazon account</StyledLink>
+
+
+        New to Amazon? <StyledLink href="/newcustomer">Create your Amazon account</StyledLink>
       </NewToAmazon>
 
       <FooterText>
@@ -69,6 +71,7 @@ const AmazonTitleLogo = styled.div`
   img {
     width: 100px;
     margin-left: 11px;
+    margin-top: 10px;
   }
 `;
 
