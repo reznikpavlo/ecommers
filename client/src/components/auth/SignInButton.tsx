@@ -23,7 +23,7 @@ const SignInButton = () => {
   );
 };
 
-//export default SignInButton;
+export default SignInButton;
 
 const SignInContainer = styled.div`
   display: flex;
