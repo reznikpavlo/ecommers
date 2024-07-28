@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {Link }from "react-router-dom";
+import { Link } from "react-router-dom";
 const SignInButton = () => {
   return (
     <SignInContainer>
@@ -8,17 +8,13 @@ const SignInButton = () => {
       </SignInMessage>
 
 
-      <SignInBox>
-      <Link to="/signin" style={{ color: 'inherit', textDecoration: 'none' }}>
-      Sign in
-    </Link>
+      <SignInBox to="/signIn">
+        Sign in
       </SignInBox>
 
-      <NewCustomerLink>
-      <Link to="/newcustomer" style={{ color: 'inherit', textDecoration: 'none' }}>
-     New Customer start Here
-      </Link>
-      </NewCustomerLink>
+      <SignUpBox to="/signUp">
+        New Customer start Here
+      </SignUpBox>
     </SignInContainer>
   );
 };
@@ -35,14 +31,16 @@ const SignInContainer = styled.div`
   border: 1px solid #ccc;
 `;
 
+
 const SignInMessage = styled.h2`
   font-size: 14px;
   margin-bottom: 10px;
 `;
 
-const SignInBox = styled.button`
+const SignInBox = styled(Link)`
   padding: 10px 120px;
   background-color: #f90;
+  text-decoration: none;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -56,10 +54,11 @@ const SignInBox = styled.button`
   }
 `;
 
-const NewCustomerLink = styled.p`
+const SignUpBox = styled(Link)`
   margin-top: 10px;
   font-size: 14px;
   color: #666;
+  text-decoration: none;
 `;
 
 const StartHereLink = styled.a`
