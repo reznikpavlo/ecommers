@@ -15,7 +15,9 @@ const SignInButton = () => {
       </SignInBox>
 
       <NewCustomerLink>
-        New customer? <StartHereLink href="#">Start here.</StartHereLink>
+      <Link to="/newcustomer" style={{ color: 'inherit', textDecoration: 'none' }}>
+     New Customer start Here
+      </Link>
       </NewCustomerLink>
     </SignInContainer>
   );

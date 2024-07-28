@@ -28,17 +28,25 @@ function Header() {
 
       <HeaderNavItems>
         <HeaderOption>
-          <OptionLineOne>Hello, Daniel </OptionLineOne>
-          <OptionLineTwo>Account & Lists</OptionLineTwo>
+        <OptionContainer>
+           
+           <Link to="/signin" style={{ color: 'inherit', textDecoration: 'none' }}>
+           <OptionLineOne>Hello, Sign in</OptionLineOne>
+           </Link>
+          <br />
+         Account & Lists
+          </OptionContainer>
         </HeaderOption>
 
-        <HeaderOption>
-          <OptionLineOne>Returns </OptionLineOne>
-          <OptionLineTwo>&Orders</OptionLineTwo>
-        </HeaderOption>
 
+        <OptionContainer>
+           <OptionLineOne>Returns</OptionLineOne>
+          <br />
+          &Orders
+          </OptionContainer>
+  
         <HeaderOptionCart>
-          <Link to="/cart">
+          <Link to="/Cart">
             <ShoppingCartIcon />
             <CartCount>5</CartCount>
           </Link>
@@ -68,11 +76,36 @@ const HeaderOptionAddress = styled.div`
   padding-left: 9px;
   align-items: center;
 `;
+const OptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 2px;
+  border-radius: 2px;
+  text-align: center;
 
-const OptionLineOne = styled.div``;
-const OptionLineTwo = styled.div`
-  font-weight: 700;
+  &:hover {
+ 
+    box-shadow: 0 0 0 3px #f90;
+  }
 `;
+
+const OptionLineTwo = styled.div`
+font-weight:500;
+`
+
+
+const OptionLineOne = styled.div`
+  font-weight: 500;
+  color: #FFFFFF;
+  &:focus-within {
+    outline: none;
+    box-sizing: border-box;
+    border: 2px solid #f90;
+    box-shadow: 0 0 0 3px #f90;
+  }
+`;
+
+
 
 const HeaderSearch = styled.div`
   display: flex;
@@ -108,7 +141,11 @@ const HeaderNavItems = styled.div`
   display: flex;
 `;
 const HeaderOption = styled.div`
-  padding: (10px, 9px, 10px, 9px);
+  display: flex;
+  flex-direction: column;
+  margin: 0 8px;
+  padding: 8px;
+  cursor: pointer;
 `;
 const HeaderOptionCart = styled.div`
   display: flex;

@@ -4,6 +4,7 @@ import TopNavbar from "./TopNavbar";
 import BottomNavbar from "./BottomNavbar";
 import TopFooter from "./TopFooter";
  // importing Signin component from /auth/Signin
+import SignInButton from "../auth/SignInButton";
 import LanguageFooter from "./LanguageFooter";
 import BottomFooter from "./BottomFooter";
 
@@ -16,6 +17,7 @@ const Layout: React.FC = () => {
       <Outlet />
 
       <TopFooter />
+      <SignInButton/>
       <LanguageFooter />
       <BottomFooter />
     </div>
