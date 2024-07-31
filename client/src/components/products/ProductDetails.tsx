@@ -73,13 +73,16 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
+  height: 200%;
   background-color: blue;
 `
 
 const AttachmentsContainer = styled.div`
 display: flex;
-width: 50%;
-background-color: yellow;`
+width: 40%;
+height: 100%;
+background-color: yellow;
+justify-content: flex-start;`
 
 const IconsContainer = styled.div`
 display: flex;
@@ -89,22 +92,20 @@ border: 2px solid black;`
 
 const MainImgContainer = styled.div`
   display: flex;
-  width: 30%;
-  overflow: hidden;
+  width: 100%;
   background-color: red;
-  align-items: center; /* Center items vertically */
-  justify-content: center; /* Center items horizontally */
 `;
-
-const Icon = styled.img`
-display: flex;
-width: 50px;
-border: 2px solid green;`
 
 const MainImg = styled.img`
 display: flex;
 width: 100%;
 object-fit: contain;`
+
+const Icon = styled.img`
+display: flex;
+width: 100%;
+border: 2px solid green;`
+
 
 const InfoContainer = styled.div`
 display: flex;`
